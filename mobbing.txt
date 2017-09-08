@@ -1,0 +1,6 @@
+Retro
+- Good to be self led
+- Explored problem domain a lot at the beginning. This was probably as a result of the proposer of the mobbing topic not being present
+- Proposer should be present
+- We should vote the day before the mob or the week before
+- We didn't finish the implementation but enough to continue

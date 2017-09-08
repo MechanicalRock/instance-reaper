@@ -1,0 +1,21 @@
+
+service: instance-reaper
+
+provider:
+  name: aws
+  runtime: python2.7
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - s3:*
+        - sns:*
+      Resource: "*"
+
+plugins:
+  - serverless-python-requirements
+
+functions:
+  instance-reaper:
+    handler: src/handler.reaper_event_handler
+    events:
+      - schedule: rate(3 hours)

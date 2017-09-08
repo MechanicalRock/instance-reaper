@@ -1,0 +1,23 @@
+version: '2'
+services:
+  dev-env:
+    build:
+      context: .
+    working_dir: /instance-reaper
+    volumes:
+      - .:/instance-reaper
+      - ~/.aws/:/root/.aws
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_PROFILE
+      - AWS_SESSION_TOKEN
+      - AWS_SECURITY_TOKEN
+      - ENV=local
+    entrypoint:
+      - /bin/bash
+  localstack:
+    image: atlassianlabs/localstack
+    ports:
+      - "4567-4581:4567-4581"
+      - "8080:8080"

@@ -1,0 +1,20 @@
+{
+  "name": "instance-reaper",
+  "version": "1.0.0",
+  "description": "find and kill inactive ec2 instances",
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/mechanicalrock/instance-reaper.git"
+  },
+  "keywords": [
+    "instance-reaper",
+    "ec2",
+    "serverless"
+  ],
+  "author": "mechanicalrock",
+  "license": "GPL-3.0",
+  "homepage": "https://bitbucket.org/mechanicalrock/instance-reaper#readme",
+  "dependencies": {
+    "serverless-python-requirements": "^2.5.0"
+  }
+}
