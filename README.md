@@ -23,6 +23,4 @@ provider:
 
 Run the following, in the project root directory:
 
-```bash
-./scripts/deploy.sh
-```
+> ./scripts/deploy.sh
