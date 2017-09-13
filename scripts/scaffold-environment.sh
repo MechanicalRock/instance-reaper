@@ -1,12 +1,12 @@
 #!/bin/bash
 
-company_name=mechanicalrock
+COMPANY_NAME=$1
+TEAM_EMAIL=$2
+REGION=$3
 
 # create localstack resources
-if [ $ENV = 'local']; then
-    aws --endpoint-url=http://localhost:4572 s3 mb s3://instance-reaper-${company_name}-logging
-    aws --endpoint-url=http://locahost:4575 sns create-topic --name instance-reaper-notifications
+if [ $ENV = "local" ]; then
+    aws --endpoint-url=http://localhost:4572 s3 mb s3://instance-reaper-${COMPANY_NAME}-logging
 else
-    aws s3 mb s3://instance-reaper-${company_name}-logging
-    aws sns create-topic --name instance-reaper-notifications
+    aws s3 mb s3://instance-reaper-${COMPANY_NAME}-logging --region ${REGION}
 fi

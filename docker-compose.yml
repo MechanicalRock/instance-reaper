@@ -17,7 +17,7 @@ services:
     entrypoint:
       - /bin/bash
   localstack:
-    image: atlassianlabs/localstack
+    image: localstack/localstack
     ports:
-      - "4567-4581:4567-4581"
+      - "4569-4581:4569-4581"
       - "8080:8080"

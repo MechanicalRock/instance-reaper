@@ -36,6 +36,7 @@ pyasn1==0.3.3
 pycodestyle==2.3.1
 pylint==1.7.2
 pytest==3.2.1
+pytest-spec==1.1.0
 python-dateutil==2.6.1
 python-Levenshtein==0.12.0
 python-mimeparse==1.6.0

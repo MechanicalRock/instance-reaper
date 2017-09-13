@@ -7,9 +7,11 @@ pip install --upgrade --user awscli pip
 pip install -r ./requirements.txt
 
 echo "Creating test resources on localstack"
-sh ./scaffld-environment.sh
+./scripts/scaffold-environment.sh
+
+# rate code
+pylint src || true
 
 # test:
-# pytest --spec
+pytest --spec
 lettuce tests
-pylint src || true

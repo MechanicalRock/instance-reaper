@@ -1,6 +1,0 @@
-#!/bin/bash
-yum install httpd -y
-yum update -y
-service httpd start
-chkconfig httpd on
-echo “<html><head><title>Hello World</title></head><body>Hello World</body></html>” > /var/www/html/index.html

@@ -4,18 +4,32 @@ service: instance-reaper
 provider:
   name: aws
   runtime: python2.7
+  environment: 
+    TEAM_NAME: your.team.name.here
+    TEAM_EMAIL: your.team.email@teamdomain.com
   iamRoleStatements:
     - Effect: Allow
       Action: 
+        - ec2:*
+        - cloudwatch:*
         - s3:*
-        - sns:*
+        - ses:SendEmail
       Resource: "*"
 
 plugins:
   - serverless-python-requirements
 
+resources:
+  Resources:
+    LoggingBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: instance-reaper-${env:TEAM_NAME}-logging
+
 functions:
   instance-reaper:
     handler: src/handler.reaper_event_handler
+    memorySize: 1536
+    timeout: 300
     events:
       - schedule: rate(3 hours)

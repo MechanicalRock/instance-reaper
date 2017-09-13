@@ -1,31 +1,28 @@
 # README #
 
-This README will document the steps for running the Instance Reaper
+# Ensure you have the following on your machine:
 
-# To Run the tests:
+- node 
+- npm 
+- configured aws credentials
 
-> lettuce tests
+# You will need to edit the serverless.yml file:
 
-`fdsaflasdf`
+Just change the TEAM_NAME & TEAM_EMAIL env variables.
 
-See here for running lambdas periodically:
+```yml
+provider:
+  name: aws
+  runtime: python2.7
+  environment: 
+    TEAM_NAME: your.team.name.here
+    TEAM_EMAIL: your.team.email@teamdomain.com
+```
 
-http://docs.aws.amazon.com/lambda/latest/dg/with-scheduled-events.html
+# To deploy to all lambda enabled regions on your AWS account
 
-# Bring up the development environment
+Run the following, in the project root directory:
 
-- docker-compose build dev-env
-- docker-compose up
-- docker-compose run --rm dev-env
-
-# If you install a new pip module, remember:
-
-> pip freeze > requirements.txt
-
-# Check code quality
-
-> pylint ./*
-
-
-# Check utilization metrics for an ec2 instance and output to json file
-aws cloudwatch get-metric-statistics --namespace AWS/EC2 --dimensions Name=InstanceId,Value=i-02eb595d1ea548b31 --metric-name CPUUtilization --start-time 2017-07-10 --end-time 2017-08-12 --period 3600 --region ap-southeast-2 --statistics Average > cpu_utilization.json
+```bash
+./scripts/deploy.sh
+```
