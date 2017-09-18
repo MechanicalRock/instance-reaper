@@ -52,20 +52,18 @@ class Reaper(object):
             sleep(1)
             instance = self.instance_handler.get_instance(instance_id)
 
-        # owner = self.instance_handler.get_owner_tag(instance['Tags'])
-        # if owner:
         presigned_url = self.log.get_presigned_url()
         self.email.send_email(instance_id, presigned_url)
 
         return instance['State']['Name'] == 'stopping'
 
     def filter_instances(self, instances):
-        ''' use lambda expression '''
+        ''' filter out prod instances and instances that are not old enough '''
         return [instance['Instances'][0] for instance in instances
                 if self.instance_filter(instance)]
 
     def instance_filter(self, instance):
-        ''' do something '''
+        ''' perform the necessary checks on the tags and age of the instance '''
         instance = instance['Instances'][0]
         instance_mature = self.is_instance_mature(instance['LaunchTime'])
         tags = self.instance_handler.get_tags(instance['Tags'])

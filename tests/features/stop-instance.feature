@@ -7,7 +7,7 @@ Feature: Stop instance when Idle
 
   Rules:
     - "Stack" tag must contain "Prod"
-    - Instance idle > three hours (Average CPU utilisation is less than 2% and Average NetworkOut is less than 5mb)
+    - Instance idle > three hours (Average CPU utilisation is less than 2% and Average NetworkOut is less than 5kb)
 
   	Scenario: Prod stack is "Idle"
     	Given an EC2 instance with tag Stack Value is "Prod"
