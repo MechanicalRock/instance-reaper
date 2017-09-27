@@ -1,5 +1,5 @@
-
-service: instance-reaper
+# short name because the role name must be short
+service: IR
 
 provider:
   name: aws
@@ -24,7 +24,7 @@ resources:
     LoggingBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: instance-reaper-${env:TEAM_NAME}-logging
+        BucketName: instance-reaper-{team.name}-logging
 
 functions:
   instance-reaper:

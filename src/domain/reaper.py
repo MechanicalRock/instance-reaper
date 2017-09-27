@@ -19,6 +19,7 @@ class Reaper(object):
         self.email = EmailService()
         self.log = LoggingService(region_name)
         self.log.get_log()
+        self.region = region_name
 
     def stop_all_relevant_instances(self):
         ''' get all relevant instances and stop the bastards'''
@@ -53,7 +54,7 @@ class Reaper(object):
             instance = self.instance_handler.get_instance(instance_id)
 
         presigned_url = self.log.get_presigned_url()
-        self.email.send_email(instance_id, presigned_url)
+        self.email.send_email(instance_id, presigned_url, self.region)
 
         return instance['State']['Name'] == 'stopping'
 

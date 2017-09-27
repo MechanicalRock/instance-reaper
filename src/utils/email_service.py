@@ -1,12 +1,18 @@
 ''' module for the email service '''
 from os import environ
+from os.path import join, dirname
 import re
 import boto3
 
+__author__ = 'Mechanical Rock'
+__version__ = '0.0.1'
+
 
 class EmailService(object):
-    ''' class for the email service '''
-
+    """
+    Sends emails to team members, of instances that have
+    been stopped, by the instance reaper
+    """
     EMAIL_REGEX = re.compile(
         r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
 
@@ -14,24 +20,52 @@ class EmailService(object):
         self.ses = boto3.client('ses', region_name='us-east-1')
 
     def is_email(self, candidate):
-        ''' checks whether the owner tag is a valid email '''
+        """
+        checks whether the owner tag is a valid email
+
+        :type candidate: string
+        :param candidate: owner's email
+
+        :rtype: boolean
+        :return: true if valid email
+        """
         is_email = False
         if self.EMAIL_REGEX.match(candidate):
             is_email = True
         return is_email
 
-    def send_email(self, instance_id, presigned_url):
-        ''' sends an email to the recipient informing that their instance
-         with the instance_id has been stopped '''
-        email = self.build_email(instance_id, presigned_url)
+    def send_email(self, instance_id, presigned_url, region):
+        """
+        sends an email to the recipient informing that their instance
+        with the instance_id has been stopped.
+
+        :type instance_id: string
+        :param instance_id: the id of the instance that has been stopped
+
+        :type presigned_url: string
+        :param presigned_url: the generated presigned url to the log file
+        with the details of the stopped instances
+        """
+        email = self.build_email(instance_id, presigned_url, region)
         self.ses.send_email(
             Source=email['source'],
             Destination=email['destination'],
             Message=email['message']
         )
 
-    def build_email(self, instance_id, presigned_url):
-        ''' builds the dict to send as an email '''
+    def build_email(self, instance_id, presigned_url, region):
+        """
+        builds the object to send as an email
+
+        :type instance_id: string
+        :param instance_id: the id of the instance that has been stopped
+
+        :type presigned_url: string
+        :param presigned_url: the generated presigned url to the log file
+
+        :rtype: dict
+        :return: the email object to be sent out
+        """
         team_email = environ.get("TEAM_EMAIL")
         return {
             'source': team_email,
@@ -44,8 +78,8 @@ class EmailService(object):
                     'Charset': 'UTF-8'
                 },
                 'Body': {
-                    'Text': {
-                        'Data': self.build_email_body(instance_id, presigned_url),
+                    'Html': {
+                        'Data': self.build_email_body(instance_id, presigned_url, region),
                         'Charset': 'UTF-8'
                     }
                 }
@@ -53,17 +87,23 @@ class EmailService(object):
         }
 
     @staticmethod
-    def build_email_body(instance_id, presigned_url):
-        ''' builds the message body for an email '''
-        return ('Hello {}, \n'
-                'This email serves to inform you that the ec2 instance, with the instance id: {},'
-                ' has been stopped by the instance reaper.\n'
-                'You have been sent this email, as you are a member of the team, concerned with '
-                ' the management of this instance.\n\n'
-                'To view the logs, check out this link: {}\n\n'
-                'Kind Regards,\n'
-                'The Instance Reaper\n').format(
-                    environ.get('TEAM_NAME'),
-                    instance_id,
-                    presigned_url
-                )
+    def build_email_body(instance_id, presigned_url, region):
+        """
+        builds the message body for an email
+
+        :type instance_id: string
+        :param instance_id: the id of the instance that has been stopped
+
+        :type presigned_url: string
+        :param presigned_url: the generated presigned url to the log file
+
+        :rtype: dict
+        :return: the email message to be sent out to team members
+        """
+        html_file = join(dirname(dirname(__file__)),
+                         'resources', 'template.html')
+        html_file = open(html_file, 'r')
+        email = html_file.read()
+        email = email.replace('{{region}}', region)
+        email = email.replace('{instanceId}', instance_id)
+        return email.replace('{logLink}', presigned_url)

@@ -1,0 +1,13 @@
+2017-09-27 02:31:40.897106: ********************************************
+2017-09-27 02:31:40.897265: Evaluating instance with id: i-00b6b7620123c104f
+2017-09-27 02:31:40.898148: Instance launched at: 2017-09-01 08:09:01+00:00
+2017-09-27 02:31:40.898235: Instance has tags: ['instance-reaper-test-prod', 'bryan.yu@mechanicalrock.io', 'Prod']
+2017-09-27 02:31:40.898441: CPU utilisation is 0.0356%
+2017-09-27 02:31:40.898613: Network out is 0.173971428571kb
+2017-09-27 02:31:43.648948: ********************************************
+2017-09-27 02:31:43.649939: Evaluating instance with id: i-0204ddc16a3b74ed6
+2017-09-27 02:31:43.650007: Instance launched at: 2017-09-27 02:18:42+00:00
+2017-09-27 02:31:43.650219: Instance has tags: ['bryan.yu@mechanicalrock.io', 'Dev', 'instance-reaper-test-dev']
+2017-09-27 02:31:43.650384: CPU utilisation is 0.573%
+2017-09-27 02:31:43.650528: Network out is 3.7137kb
+2017-09-27 02:31:43.652164: Stopping instance with id: i-0204ddc16a3b74ed6

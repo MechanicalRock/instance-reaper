@@ -1,8 +1,7 @@
 #!/bin/bash
 
 COMPANY_NAME=$1
-TEAM_EMAIL=$2
-REGION=$3
+REGION=$2
 
 # create localstack resources
 if [ $ENV = "local" ]; then

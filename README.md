@@ -8,6 +8,8 @@ Instance Reaper is a scheduled job, that will run every 3 hours and look for any
 
 - node 
 - npm 
+- python2.7
+- pip
 - configured aws credentials
 
 # You will need to edit the serverless.yml file:
