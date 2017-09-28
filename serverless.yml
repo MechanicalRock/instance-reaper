@@ -14,7 +14,6 @@ provider:
         - cloudwatch:*
         - s3:*
         - ses:SendEmail
-        - sts:GetFederationToken
       Resource: "*"
 
 plugins:

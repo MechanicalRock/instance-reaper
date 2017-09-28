@@ -5,7 +5,7 @@ from os import environ
 from src.utils.logging_service import LoggingService
 
 environ['ENV'] = 'local'
-environ['TEAM_NAME'] = 'mechanicalrock'
+environ['TEAM_NAME'] = 'company'
 REGION = 'ap-southeast-1'
 LOGGING_SERVICE = LoggingService(REGION)
 
@@ -31,15 +31,6 @@ def test_get_local_log_name():
     local_log = LOGGING_SERVICE.get_local_log_name(log_key)
 
     assert 'src' not in local_log
-
-
-def test_get_presigned_url():
-    """
-    Tests the function that generates the presigned URL
-    """
-    environ['TEAM_NAME'] = 'mechanicalrock'
-    presigned_url = LOGGING_SERVICE.get_presigned_url()
-    # assert isinstance(presigned_url, str)
 
 
 def test_get_log_file():

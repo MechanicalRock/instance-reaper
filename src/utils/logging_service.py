@@ -3,7 +3,6 @@ logging service module
 """
 from os import environ
 from os.path import join, dirname
-from json import dumps
 from datetime import datetime
 import boto3
 
@@ -19,20 +18,6 @@ class LoggingService(object):
     :param region: the aws region
     """
     BUCKET_NAME = 'instance-reaper-{}-logging'.format(environ.get('TEAM_NAME'))
-    TOKEN_DURATION = 3600 * 36
-    TOKEN_POLICY = {
-        'Version': '2012-10-17',
-        'Statement': [
-            {
-                'Sid': 'Stmt1',
-                'Effect': 'Allow',
-                'Action': [
-                    "s3:GetObject"
-                ],
-                'Resource': 'arn:aws:s3:::{}/*'.format(BUCKET_NAME)
-            }
-        ]
-    }
 
     def __init__(self, region):
         s3_endpoint = "http://localhost:4572" if self.is_local() else None
@@ -122,34 +107,3 @@ class LoggingService(object):
         lambda_log = '/tmp/{}'.format(log_key)
 
         return dev_log if self.is_local() else lambda_log
-
-    def get_presigned_url(self):
-        """
-        creates and returns a presigned url for accessing the log file
-
-        :rtype: string
-        :return: the presigned url for the generated log file
-        """
-        # create an sts token to get some temporary credentials
-        token = boto3.client('sts').get_federation_token(
-            Name='IR-{stage}-{region}-lambdaRole'.format(stage='dev', region=self.region),
-            Policy=dumps(self.TOKEN_POLICY),
-            DurationSeconds=self.TOKEN_DURATION
-        )['Credentials']
-
-        # create a new boto session with the sts token
-        session = boto3.session.Session(
-            aws_access_key_id=token['AccessKeyId'],
-            aws_secret_access_key=token['SecretAccessKey'],
-            aws_session_token=token['SessionToken']
-        )
-
-        #  create and return the presigned url
-        return session.client('s3').generate_presigned_url(
-            ClientMethod='get_object',
-            Params={
-                'Bucket': self.BUCKET_NAME,
-                'Key': self.log_key
-            },
-            ExpiresIn=self.TOKEN_DURATION
-        )

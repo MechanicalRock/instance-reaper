@@ -26,7 +26,9 @@ class Reaper(object):
         instances = self.get_relevant_instances()
         for instance in instances:
             if self.is_instance_idle(instance):
-                self.stop_idle_instance(instance)
+                if self.stop_idle_instance(instance):
+                    self.email.send_email(
+                        instance['InstanceId'], self.region, self.log.log_file)
         self.log.save_log()
 
     def is_instance_idle(self, instance):
@@ -52,9 +54,6 @@ class Reaper(object):
         while instance['State']['Name'] != 'stopping':
             sleep(1)
             instance = self.instance_handler.get_instance(instance_id)
-
-        presigned_url = self.log.get_presigned_url()
-        self.email.send_email(instance_id, presigned_url, self.region)
 
         return instance['State']['Name'] == 'stopping'
 
