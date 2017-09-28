@@ -13,7 +13,7 @@ provider:
         - ec2:*
         - cloudwatch:*
         - s3:*
-        - ses:SendEmail
+        - ses:SendRawEmail
       Resource: "*"
 
 plugins:
