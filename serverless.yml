@@ -1,12 +1,20 @@
-# short name because the role name must be short
 service: IR
+package:
+  exclude: 
+    - .*
+    - tests/**
+    - scripts/**
+    - node_modules/**
+    - dev-dependencies/**
+  include:
+    - src/**
 
 provider:
   name: aws
   runtime: python2.7
   environment: 
-    TEAM_NAME: your.team.name.here
-    TEAM_EMAIL: your.team.email@teamdomain.com
+    TEAM_NAME: mechanicalrock
+    TEAM_EMAIL: team@mechanicalrock.io
   iamRoleStatements:
     - Effect: Allow
       Action: 
@@ -19,7 +27,13 @@ provider:
 plugins:
   - serverless-python-requirements
 
+custom:
+  pythonRequirements:
+    invalidateCaches: true
+    fileName: requirements.txt
+
 resources:
+  Description: Instance Reaper stack
   Resources:
     LoggingBucket:
       Type: AWS::S3::Bucket
@@ -29,7 +43,7 @@ resources:
 functions:
   instance-reaper:
     handler: src/handler.reaper_event_handler
-    memorySize: 1536
+    memorySize: 1024
     timeout: 300
     events:
       - schedule: rate(3 hours)

@@ -38,7 +38,7 @@ class Reaper(object):
         net_out = metrics['AvgNetworkOut']
         tags = self.instance_handler.get_tags(instance['Tags'])
         self.log.log_instance_details(instance, cpu_util, net_out, tags)
-        return cpu_util < 2 and net_out < 5
+        return cpu_util < 2 and net_out < 20
 
     def get_relevant_instances(self):
         ''' gets all the "running" instances in a region that are older than 3 hours '''

@@ -5,8 +5,8 @@ export TEAM_NAME=team.name
 export TEAM_EMAIL=team@email.co
 
 # install:
-pip install --upgrade --user awscli pip
-pip install -r ./requirements.txt
+pip install --upgrade awscli pip
+pip install -r dev-dependencies/requirements.txt
 
 echo "Creating test resources on localstack"
 ./scripts/scaffold-environment.sh
