@@ -1,7 +1,7 @@
 #! /bin/bash 
 
 # install required node modules for deployment:
-npm install
+npm install --only=production
 npm install -g serverless
 
 # deploy to every lambda enabled aws region:

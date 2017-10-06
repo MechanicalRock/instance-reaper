@@ -36,7 +36,7 @@ class Reaper(object):
         metrics = self.cloudwatch.get_average_metrics(instance['InstanceId'])
         cpu_util = metrics['AvgCPUUtilisation']
         net_out = metrics['AvgNetworkOut']
-        tags = self.instance_handler.get_tags(instance['Tags'])
+        tags = instance['Tags']
         self.log.log_instance_details(instance, cpu_util, net_out, tags)
         return cpu_util < 2 and net_out < 20
 
