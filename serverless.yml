@@ -13,8 +13,8 @@ provider:
   name: aws
   runtime: python2.7
   environment: 
-    TEAM_NAME: mechanicalrock
-    TEAM_EMAIL: team@mechanicalrock.io
+    TEAM_NAME: team.name
+    TEAM_EMAIL: team@email.co
   iamRoleStatements:
     - Effect: Allow
       Action: 
