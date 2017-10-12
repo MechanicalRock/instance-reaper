@@ -38,6 +38,7 @@ class Reaper(object):
         cpu_util = metrics['AvgCPUUtilisation']
         net_out = metrics['AvgNetworkOut']
         tags = dumps(instance['Tags'])
+
         self.log.log_instance_details(instance, cpu_util, net_out, tags)
         return cpu_util < 2 and net_out < 20
 

@@ -8,5 +8,7 @@ export AWS_SECRET_ACCESS_KEY=$(echo $sts_json | jq .Credentials.SecretAccessKey 
 export AWS_SESSION_TOKEN=$(echo $sts_json | jq .Credentials.SessionToken | xargs)
 
 mv setup setup.cfg
+
 ./scripts/deploy.sh
+
 mv setup.cfg setup
