@@ -83,7 +83,7 @@ class LoggingService(object):
         :type tags: list
         :param tags: the instance tags
         """
-        self.write_log("********************************************")
+        self.write_log("*************************************************")
         self.write_log("Evaluating instance with id: {}".format(
             instance['InstanceId']))
         self.write_log("Instance launched at: {}".format(

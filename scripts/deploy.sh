@@ -1,6 +1,9 @@
 #! /bin/bash 
 
 # install required node modules for deployment:
+
+rm -rf node_modules
+
 npm install --only=production
 npm install -g serverless
 
