@@ -9,18 +9,18 @@ Feature: Stop instance when Idle
     - "Stack" tag must contain "Prod"
     - Instance idle > three hours (Average CPU utilisation is less than 2% and Average NetworkOut is less than 5kb)
 
-  	Scenario: Prod stack is "Idle"
+      Scenario: Prod stack is "Idle"
     	Given an EC2 instance with tag Stack Value is "Prod"
     	When the EC2 instance is Idle
     	Then the EC2 instance should continue running
 
-  	Scenario: Non-Prod stack is "Idle"
+      Scenario: Non-Prod stack is "Idle"
     	Given an EC2 instance with tag Stack Value is "Dev"
     	When the EC2 instance is Idle
-   		Then the EC2 instance should be reaped
+   	Then the EC2 instance should be reaped
 
   	# Scenario Outline: Non-Prod stack is not idle
-    # 	Given an EC2 instance with tag Stack Value is "Test"
+    	# 	Given an EC2 instance with tag Stack Value is "Test"
 	# 	When the average Network Out is "<avg_network_out>" over the last "<period>"
 	# 	And the average CPU utilisation is "<avg_cpu_utilization>" over the last "<period>"
 	# 	Then the instance should not be reaped
