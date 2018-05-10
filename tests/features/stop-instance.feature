@@ -18,15 +18,3 @@ Feature: Stop instance when Idle
     	Given an EC2 instance with tag Stack Value is "Dev"
     	When the EC2 instance is Idle
    	Then the EC2 instance should be reaped
-
-  	# Scenario Outline: Non-Prod stack is not idle
-    	# 	Given an EC2 instance with tag Stack Value is "Test"
-	# 	When the average Network Out is "<avg_network_out>" over the last "<period>"
-	# 	And the average CPU utilisation is "<avg_cpu_utilization>" over the last "<period>"
-	# 	Then the instance should not be reaped
-
-	# Examples:
-	# | avg_network_out 	| avg_cpu_utilization 	| period				|
-	# | 5					| 1						| 3 hours and 1 second	|
-	# | 4					| 5						| 3 hours and 1 second	|
-	# | 1					| 1						| 2 hours				|
