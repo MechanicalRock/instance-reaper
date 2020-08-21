@@ -22,5 +22,8 @@
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
-  "snyk": true
+  "snyk": true,
+  "devDependencies": {
+    "serverless-sam": "^0.2.0"
+  }
 }

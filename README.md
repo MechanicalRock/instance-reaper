@@ -21,7 +21,7 @@ Instance Reaper is a scheduled job, that will run every 3 hours and look for any
 
 Just change the TEAM_NAME & TEAM_EMAIL env variables.
 
-```yml
+```yaml
 provider:
   name: aws
   runtime: python2.7
