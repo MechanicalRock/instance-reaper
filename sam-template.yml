@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Transform: 'AWS::Serverless-2016-10-31'
+
+Description: 'SAM template for Instance Reaper'
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: Instance-Reaper
+    Description: Monitor AWS account and shut down EC2 instances which are not marked 'Prod' and which exceed certain values.
+    Author: MechanicalRock
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: 
+    ReadmeUrl: ./README.md
+    Labels: ['EC2','remediate','monitor']
+    HomePageUrl: https://github.com/MechanicalRock/instance-reaper
+    SemanticVersion: 1.0.0
+    SourceCodeUrl: https://github.com/MechanicalRock/instance-reaper
+
+Parameters:
+  TeamName:
+    Type: String
+    Description: 'Friendly name of the team to notify'
+  TeamEmail:
+    Type: String
+    Description: 'Email address to send notificaiton to'
+
+Resources:
+  LoggingBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub 'instance-reaper-${TeamName}-logging'
+  IRDevInstanceReaper:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: src/handler.reaper_event_handler
+      Runtime: python2.7
+      CodeUri: ./.serverless/IR.zip
+      MemorySize: 1024
+      Timeout: 300
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 'ec2:*'
+                - 'cloudwatch:*'
+                - 's3:*'
+                - 'ses:SendRawEmail'
+              Resource: '*'
+      Environment:
+        Variables:
+          TEAM_NAME: !Ref TeamName
+          TEAM_EMAIL: !Ref TeamEmail
+      Events:
+        Event1:
+          Type: Schedule
+          Properties:
+            Schedule: rate(3 hours)
