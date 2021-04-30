@@ -43,7 +43,7 @@ python-subunit==1.2.0
 pytz==2017.2
 PyYAML==4.2b1
 requests==2.20
-rsa==4.1
+rsa==4.7
 s3transfer==0.1.10
 singledispatch==3.4.0.3
 six==1.10.0
